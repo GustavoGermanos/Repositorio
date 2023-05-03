@@ -33,3 +33,17 @@ def posiciona_frota (frota):
                 tabuleiro[eixo[0]][eixo[1]] = 1
 
     return tabuleiro
+
+def afundados (frota, tabuleiro):
+    afundado_x = 0
+    for tipo in frota:
+        for posicoes in frota[tipo]:
+            afundado_y = 0
+            for posicao in posicoes:
+                linha = posicao[0]
+                coluna = posicao[1]
+                if tabuleiro[linha][coluna] == 'X':
+                    afundado_y += 1
+            if afundado_y == len(posicoes):
+                afundado_x += 1
+    return afundado_x
