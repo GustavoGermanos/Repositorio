@@ -123,3 +123,4 @@ for nome_barco in frota.keys():
             contador += 1
 
 print(frota)
+print()
