@@ -1,3 +1,5 @@
+# Define Posicoes
+
 def define_posicoes(linha, coluna, orientacao, tamanho):
     posicoes = []
     for i in range(tamanho):
@@ -11,6 +13,8 @@ def define_posicoes(linha, coluna, orientacao, tamanho):
             posicoes.append(posicao)
     return posicoes
 
+# Preenche Frota
+
 def preenche_frota (frota, nome, linha, coluna, orientacao, tamanho):
     posicoes = define_posicoes(linha, coluna, orientacao, tamanho)
     if nome not in frota:
@@ -18,12 +22,16 @@ def preenche_frota (frota, nome, linha, coluna, orientacao, tamanho):
     frota[nome].append(posicoes)
     return frota
 
+# Faz Jogada
+
 def faz_jogada(tabuleiro, linha, coluna):
     if tabuleiro[linha][coluna] == 1:
         tabuleiro[linha][coluna] = 'X'
     else:
         tabuleiro[linha][coluna] = '-'
     return tabuleiro
+
+# Posiciona Frota
 
 def posiciona_frota (frota):
 
@@ -35,6 +43,8 @@ def posiciona_frota (frota):
                 tabuleiro[eixo[0]][eixo[1]] = 1
 
     return tabuleiro
+
+# Embarcações Afundadas
 
 def afundados (frota, tabuleiro):
     afundado_x = 0
@@ -49,6 +59,8 @@ def afundados (frota, tabuleiro):
             if afundado_y == len(posicoes):
                 afundado_x += 1
     return afundado_x
+
+# Posicoes Válida
 
 def posicao_valida(frota, linha, coluna, orientacao, tamanho):
     posicoes = define_posicoes(linha, coluna, orientacao, tamanho)
@@ -79,8 +91,6 @@ frota = {"porta-aviões":[],
     "submarino": []}
 
 for nome_barco in frota.keys():
-    
-    contador = 0 
 
     if nome_barco == 'porta-aviões':
         i = 1
@@ -88,8 +98,10 @@ for nome_barco in frota.keys():
         i = 2
     elif nome_barco == 'contratorpedeiro':
         i = 3
-    elif nome_barco == 'submarino':
+    else: 
         i = 4
+    
+    contador = 0 
     
     while contador < i:
         
@@ -106,7 +118,7 @@ for nome_barco in frota.keys():
                 orientacao = 'horizontal'
         
         if nome_barco == 'submarino':
-            orientacao = 'vertical'
+            orientacao = 0
 
         if orientacao == '1':
             orientacao = 'vertical'
@@ -115,12 +127,15 @@ for nome_barco in frota.keys():
             orientacao = 'horizontal'
 
         pos = posicao_valida (frota,linha,coluna,orientacao,tamanhos[nome_barco])
-        if pos == False:
-            print('Esta posição não está válida!')
 
-        else:
+        if pos == True:
+            define_posicoes(linha,coluna,orientacao,tamanhos[nome_barco])
             preenche_frota(frota,nome_barco,linha,coluna,orientacao,tamanhos[nome_barco])
             contador += 1
 
+        elif pos == False:
+            print('Esta posição não está válida!')
+
 print(frota)
-print()
+
+
